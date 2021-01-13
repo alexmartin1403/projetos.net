@@ -1,0 +1,591 @@
+--VARIAVEIS DE COLUNA PARA TABELAS DINAMICAS
+COL ANOAN NOPRINT NEW_VALUE ANOAN
+COL MESAN NOPRINT NEW_VALUE MESAN
+COL CICLO NOPRINT NEW_VALUE CICLO
+COL ANO NOPRINT NEW_VALUE ANO
+COL MES NOPRINT NEW_VALUE MES
+COL DTCORTE NOPRINT NEW_VALUE DTCORTE
+COL DTANALIS NOPRINT NEW_VALUE DTANALIS
+
+
+SELECT
+'&1' ANOAN,
+'&2' MESAN,
+'&3' CICLO,
+'&4' ANO,
+'&5' MES,
+'&6' DTCORTE,
+'&7' DTANALIS
+FROM DUAL;
+
+
+
+
+
+--Extração Regra 20 PME
+
+create table R23_P1 as(
+Select    Mes0.ban,
+          sum(NVL(Mes0.NF,0) - NVL(Mes1.NF,0)) as dif_NF         
+  From
+        (
+        SELECT  DISTINCT
+           concat(B.bl_cust_type,B.bl_cust_sub_type) TipoCli,
+                B.ban,
+                B.bill_seq_no Conta,
+                B.curr_rc_chrg_amt RC,
+                B.curr_oc_chrg_amt OTC,
+                B.curr_discount_amt,
+                B.curr_air_uc_chrg_amt Excedente,                
+                B.nf_total_amt NF,
+                B.total_due_amt Saldo,
+                B.ben_status,
+                SCRIPT_23,
+                SCRIPT_25,  
+                        SCRIPT_26        
+          From pvadat_o.pva_t_bil_BILL@PVA_3 B
+               LEFT JOIN PVADAT_O.PVA_T_BIL_PRE_BILL_EVENTS@PVA_3 E
+        ON B.BAN = E.ACCOUNT
+        LEFT JOIN
+            (SELECT SUM(CHARGE_AMOUNT)SCRIPT_23,ACCOUNT, CICLO FROM PVADAT_O.PVA_T_BIL_PRE_BILL_EVENTS@PVA_3
+                     WHERE SCRIPT_ID = 23 
+                     AND mes = to_char(add_months(sysdate,-0), 'mm')
+                     AND ano = to_char(add_months(sysdate,-0), 'yyyy')
+                     and ano = '&ANO'
+                     and mes = '&MES'
+                    and ciclo = '&CICLO'
+                    and batch = '1'
+           GROUP BY ACCOUNT, CICLO) SCRIPT23
+           ON
+                   SCRIPT23.CICLO = B.CICLO
+          AND SCRIPT23.ACCOUNT = B.BAN
+        LEFT JOIN
+          (SELECT SUM(CHARGE_AMOUNT)SCRIPT_25,ACCOUNT, CICLO FROM PVADAT_O.PVA_T_BIL_PRE_BILL_EVENTS@PVA_3
+                     WHERE SCRIPT_ID = 25 
+                     AND mes = to_char(add_months(sysdate,-0), 'mm')
+                     AND ano = to_char(add_months(sysdate,-0), 'yyyy')
+                     and ano = '&ANO'
+                     and mes = '&MES'
+                    and ciclo = '&CICLO'
+                    and batch = '1'
+           GROUP BY ACCOUNT, CICLO) SCRIPT25
+           ON
+                    SCRIPT25.CICLO = B.CICLO
+           AND SCRIPT25.ACCOUNT = B.BAN        
+        LEFT JOIN
+          (SELECT SUM(CHARGE_AMOUNT)SCRIPT_26,ACCOUNT, CICLO FROM PVADAT_O.PVA_T_BIL_PRE_BILL_EVENTS@PVA_3
+                     WHERE SCRIPT_ID = 26 
+                     AND mes = to_char(add_months(sysdate,-0), 'mm')
+                     AND ano = to_char(add_months(sysdate,-0), 'yyyy')
+                     and ano = '&ANO'
+                     and mes = '&MES'
+                    and ciclo = '&CICLO'
+                    and batch = '1'
+           GROUP BY ACCOUNT, CICLO) SCRIPT26
+           ON
+                    SCRIPT26.CICLO = B.CICLO
+             AND SCRIPT26.ACCOUNT = B.BAN
+     Where B.ciclo in (&CICLO)
+         And B.mes = to_char(add_months(sysdate,-0), 'mm')
+         And B.ano = to_char(add_months(sysdate,-0), 'yyyy')  
+                     and b.ano = '&ANO'
+                     and b.mes = '&MES'
+                    and b.ciclo = '&CICLO'
+         and (b.batch = '3' or b.batch = '2')
+        ) Mes0,
+        (
+        Select ban,
+                bill_seq_no Conta,
+                curr_rc_chrg_amt RC,
+                curr_oc_chrg_amt OTC,
+                curr_discount_amt,
+                curr_air_uc_chrg_amt Excedente,
+                nf_total_amt NF,
+                total_due_amt Saldo
+          From pvadat_o.pva_t_bil_BILL@PVA_3 B
+         Where ciclo in (&CICLO)
+           And mes = to_char(add_months(sysdate,-1), 'mm')
+           And ano = to_char(add_months(sysdate,-1), 'yyyy')
+                     and ano = '&ANOAN'
+                     and mes = '&MESAN'
+                    and ciclo = '&CICLO'
+           and (batch = '3' or batch = '2')
+        ) Mes1        
+ Where Mes0.BAN = Mes1.BAN (+)
+AND Mes0.TipoCli IN ('BM','BS')
+AND Mes0.NF > 500 --BETWEEN 100 AND 1000
+group by Mes0.TipoCli, Mes0.ban,
+          Mes0.Conta,          
+          Mes1.rc,
+          Mes0.rc,
+          Mes1.curr_discount_amt,
+          Mes0.curr_discount_amt,
+          Mes1.OTC,
+          Mes0.OTC,
+          Mes1.Excedente,
+          Mes0.Excedente,
+          Mes1.NF,
+          Mes0.NF);
+          --ORDER BY 13 DESC
+
+
+delete from r23_p1 where dif_nf <= 5000;
+
+COL AA NOPRINT NEW_VALUE AA
+COL AA1 NOPRINT NEW_VALUE AA1
+COL AA2 NOPRINT NEW_VALUE AA2
+COL AA3 NOPRINT NEW_VALUE AA3
+COL AA4 NOPRINT NEW_VALUE AA4
+COL AA5 NOPRINT NEW_VALUE AA5
+COL AA6 NOPRINT NEW_VALUE AA6
+COL AA7 NOPRINT NEW_VALUE AA7
+COL AA8 NOPRINT NEW_VALUE AA8
+COL AA9 NOPRINT NEW_VALUE AA9
+COL AA10 NOPRINT NEW_VALUE AA10
+COL AA11 NOPRINT NEW_VALUE AA11
+COL AA12 NOPRINT NEW_VALUE AA12
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA from r23_p1;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA1 from r23_p1 where dif_nf < 5500 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA2 from r23_p1 where dif_nf > 5500 and dif_nf < 7500 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA3 from r23_p1 where dif_nf > 7500 and dif_nf < 8000 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA4 from r23_p1 where dif_nf > 8000 and dif_nf < 13000 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA5 from r23_p1 where dif_nf > 13000 and dif_nf < 20000 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA6 from r23_p1 where dif_nf > 20000 and dif_nf < 25000 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA7 from r23_p1 where dif_nf > 25000 and dif_nf < 30000 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA8 from r23_p1 where dif_nf > 30000 and dif_nf < 70000 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA9 from r23_p1 where dif_nf > 70000 and dif_nf < 130000 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA10 from r23_p1 where dif_nf > 130000 and dif_nf < 170000 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA11 from r23_p1 where dif_nf > 170000 and dif_nf < 190000 ;
+
+select nvl(rtrim(xmlagg(xmlelement(e,ban,',').extract('//text()')),','),'0') AA12 from r23_p1 where dif_nf > 190000 ;
+
+
+
+
+--Levantamento tratamento do mes de acima de 10K - Luis amaral
+CREATE TABLE r23_p2 AS
+SELECT  /*+ PARALLEL(A,20) */ distinct
+ad.tax_id as CNPJ, 
+ad.name_line1 as Razão_Social, 
+ca.geo_zone,
+s.customer_id as cliente,
+CASE concat(ca.account_type,ca.account_sub_type)
+            WHEN 'BH' THEN 'Comercial - Teste'
+            WHEN 'BA' THEN 'Comercial - Grandes Contas'
+            WHEN 'BM' THEN 'Comercial - Peq Empresa'
+            WHEN 'BC' THEN 'Comercial - Vips'
+            WHEN 'GR' THEN 'Governo - Normal'
+            WHEN 'PK' THEN 'Pessoa Física - Empresa'
+            WHEN 'EE' THEN 'Outros - ECA'
+            WHEN 'BD' THEN 'Comercial - Nacional'
+            WHEN 'BS' THEN 'Comercial - AACE'
+            WHEN 'BU' THEN 'Comercial - Produtor Rural'
+            WHEN 'BG' THEN 'Comercial - Assoc. e Coop.'
+            WHEN 'BL' THEN 'Comercial - Rastr. e Telem.'
+            WHEN 'BN' THEN 'Comercial - Top Accounts'
+            WHEN 'BZ' THEN 'Comercial - Street Seller'
+            WHEN 'IF' THEN 'Individual - Formador Opinião'
+            WHEN 'II' THEN 'Individual - Pré Pago'
+            WHEN 'PK' THEN 'Pessoa Física - Empresa'
+            WHEN 'IR' THEN 'Individual - Normal'
+            WHEN 'IY' THEN 'Individual - Associado'
+            WHEN 'IP' THEN 'Individual - Profiss.Liberal'
+            WHEN 'IT' THEN 'Individual - Triple A'
+            WHEN 'IW' THEN 'Individual-DK'
+            WHEN 'IN' THEN 'Individual - Indio'
+            WHEN 'IZ' THEN 'Individual - COMBO'
+            WHEN 'IB' THEN 'Individual - COMBO'
+            WHEN 'IC' THEN 'Individual - Membro de Embaixada e Consulado'       
+        END AS "TIPO_DE_CLIENTE",
+be.bill_cycle AS ciclo, 
+pc.ban, 
+su.PRIM_RESOURCE_VAL as TERMINAL,
+--s.operator_id,
+decode(s.status, 'B', 'Faturada', 'P', 'Pendente', 'E', 'Isenta', 'R', 'Restaurada',
+               s.status) AS status_multa,
+decode(ca.account_status, 'O', 'Ativo', 'S', 'Suspenso', 'T', 'Tentativa', 'N',
+               'Cancelado', 'C', 'Fechado', ca.account_status)||' - '|| decode(ca.csa_act_rsn_cd, 'ISUS', 'Interceptacao', 'HSUS', 'Parcial', 'ALL',
+               'Total', 'FSUS', 'Final', 'CRLM', 'Limite de Uso', 'FRDF', 'Fraude',
+               ca.csa_act_rsn_cd) AS Status_ban, 
+sum(s.actual_amt) AS multa, 
+TRIM(car.act_rsn_desc) AS motivo, 
+trunc(s.sys_creation_date) AS data_multa,      
+--decode(s.status, 'B', 'Faturada', 'P', 'Pendente', 'E', 'Isenta', 'R', 'Restaurada',s.status) AS status_multa,
+trunc(sysdate+2) AS RETORNO_LIMITE
+FROM MTAAPPO.cm7_fees@TAOL1 s
+LEFT JOIN MTAAPPO.subscriber@TAOL1 su ON s.agreement_no = su.subscriber_no
+LEFT JOIN MTAAPPO.csm_pay_channel@TAOL1 pc ON s.target_pcn = pc.pym_channel_no AND pc.payment_category = 'POST'
+LEFT JOIN MTAAPPO.coll_account@TAOL1 ca ON pc.ban = ca.account_id
+LEFT JOIN MTAAPPO.billing_entity@TAOL1 be ON pc.ban = be.ban AND pc.ben = be.ben
+LEFT JOIN mtarefolc.csm_cycle@TAOL1 cc ON be.bill_cycle = cc.cycle_code
+LEFT JOIN MTAAPPO.cycle_control@TAOL1 co ON co.cycle_close_date >= s.effective_date
+AND co.cycle_close_date < add_months(s.effective_date, 1)
+AND be.bill_cycle = co.cycle_code
+LEFT JOIN mtarefolc.csm_activity@TAOL1 cy ON s.activity_code = cy.activity_code
+LEFT JOIN mtarefolc.csm_act_rsn@TAOL1 car ON s.activity_code = car.activity_code AND s.act_rsn_code = car.act_rsn_cd
+LEFT JOIN mtaappc.address_name@TAOL1 ad
+on ad.account_id = pc.ban
+WHERE 1=1
+and ca.account_type = 'B'
+and ca.account_sub_type in ('M','S')
+--and car.act_rsn_desc = 'Suspensao Final - Cobranca'
+and pc.ban in (&AA)
+--and ca.account_status <> 'O'
+--and s.status = 'P'
+and be.bill_cycle in (&CICLO)
+--and co.cycle_start_date > '30/10/2017'
+and co.cycle_close_date > '&DTCORTE'
+and co.cycle_close_date < '&DTANALIS'
+group by
+ad.name_line1, 
+ad.tax_id, 
+s.customer_id, 
+ca.account_type,
+ca.account_sub_type,
+ca.geo_zone,
+pc.ban, 
+su.PRIM_RESOURCE_VAL,
+be.bill_cycle ,
+s.operator_id,
+s.status,
+decode(ca.account_status, 'O', 'Ativo', 'S', 'Suspenso', 'T', 'Tentativa', 'N',
+               'Cancelado', 'C', 'Fechado', ca.account_status), 
+decode(ca.csa_act_rsn_cd, 'ISUS', 'Interceptacao', 'HSUS', 'Parcial', 'ALL',
+               'Total', 'FSUS', 'Final', 'CRLM', 'Limite de Uso', 'FRDF', 'Fraude',
+               ca.csa_act_rsn_cd) ,
+s.charge_cd ,
+TRIM(car.act_rsn_desc),
+trunc(s.sys_creation_date) ,
+decode(s.status, 'B', 'Faturada', 'P', 'Pendente', 'E', 'Isenta', 'R', 'Restaurada',s.status),
+co.cycle_close_date
+--s.sys_creation_date
+ORDER BY s.customer_id, trunc(s.sys_creation_date) DESC
+;
+
+
+
+--delete from r23_p2 where multa <= 5000;
+
+
+
+
+CREATE TABLE r23_p3 AS
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA1))
+		group by a.src_customer;
+
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA2))
+		group by a.src_customer;
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA3))
+		group by a.src_customer;
+
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA4))
+		group by a.src_customer;
+
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA5))
+		group by a.src_customer;
+
+
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA6))
+		group by a.src_customer;
+
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA7))
+		group by a.src_customer;
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA8))
+		group by a.src_customer;
+
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA9))
+		group by a.src_customer;
+
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA10))
+		group by a.src_customer;
+
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA11))
+		group by a.src_customer;
+
+
+insert into r23_p3
+select a.src_customer
+from mtaappc.charge@TAOL1 a, mtaappc.bill_charge_info@TAOL1 b
+where a.charge_code = b.charge_code
+and (actv_amt_incl_tax is not null)
+--and actv_reason_code in ('O')
+--and ban in () -- coloque as contas
+--and actv_bill_seq_No in (17) -- Coloque o bill_seq_No da fatura
+and (a.ben,a.actv_bill_seq_no) in
+             (Select /*+ index(b,bill_pk) */ ben ,bill_seq_no
+             from  mtaappo.bill@TAOL1 b
+             where CYCLE_RUN_MONTH IN ('&MES')   
+             AND CYCLE_RUN_YEAR in ('&ANO')
+         --    and cycle_code = '44'
+             and BAN in (&AA12))
+		group by a.src_customer;
+
+
+
+
+
+
+
+CREATE TABLE r23_p4 AS
+SELECT  ENT_SEQ_no,CUSTOMER_ID, effective_date, ACTUAL_AMT,status
+  FROM MTAAPPO.CM7_FEES@TAOL1
+  WHERE CUSTOMER_ID IN (select src_customer from r23_p3 where src_customer is not null)
+  and effective_date > to_date('&DTCORTE','dd/mm/yyyy');
+  --and status = 'B' -- STATUS PARA COBRAR
+
+
+
+
+SET ECHO OFF
+SET PAGESIZE 0
+SET LINESIZE 32767
+SET feed OFF
+SET head off
+SET VERIFY OFF
+SET TERMOUT OFF
+SET TRIMSPOOL ON
+SET numw 30
+SET WRAP OFF
+
+SPOOL .\SAIDA\Levantamento_de_Multa_5K_&ANOAN._&MESAN._&CICLO..csv
+
+select 'BAN;ANALISE;CNPJ;RAZÃO_SOCIAL;GEO_ZONE;MOTIVO;RETORNO_LIMITE;Total;É DEVIDA?'
+  from dual; 
+
+
+select ban ||';'||
+       'MULTA' ||';'||
+       to_number(cnpj,'999999999999999999') ||';'||
+       razão_social ||';'||
+       geo_zone ||';'||
+       motivo ||';'||
+       retorno_limite ||';'||
+       sum(multa) ||';'||
+       ''
+  from r23_p2
+  group by ban, cnpj,razão_social,geo_zone,motivo,retorno_limite;
+
+SPOOL OFF
+
+
+SET ECHO OFF
+SET PAGESIZE 0
+SET LINESIZE 32767
+SET feed OFF
+SET head off
+SET VERIFY OFF
+SET TERMOUT OFF
+SET TRIMSPOOL ON
+SET numw 30
+SET WRAP OFF
+
+SPOOL .\SAIDA\Isencao_de_multa_&ANOAN._&MESAN._&CICLO..csv
+
+
+select '1'||';'||ENT_SEQ_no||';'||CUSTOMER_ID||';'||'93610583'||';'|| effective_date||';'|| ACTUAL_AMT||';'||status
+  from r23_p4;
+
+SPOOL OFF
+
+/
+
+
+drop table R23_P1;
+
+purge table R23_P1;
+
+
+DROP TABLE r23_p2;
+
+purge table R23_P2;
+
+
+DROP TABLE r23_p3;
+
+purge table R23_P3;
+
+
+DROP TABLE r23_p4;
+
+purge table r23_p4;
+
+
+
+exit;
+          
+

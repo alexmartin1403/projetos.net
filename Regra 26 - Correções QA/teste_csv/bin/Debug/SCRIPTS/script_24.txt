@@ -1,0 +1,390 @@
+--VARIAVEIS DE COLUNA PARA TABELAS DINAMICAS
+COL CICLO NOPRINT NEW_VALUE CICLO
+COL ANO NOPRINT NEW_VALUE ANO
+COL MES NOPRINT NEW_VALUE MES
+
+SELECT
+'&1' CICLO,
+'&2' ANO,
+'&3' MES
+FROM DUAL;
+
+
+create table R24_P1 as(
+select ban,subScriber_no,src_customer from  pvadat_o.pva_t_bil_CHARGE@PVA_3
+where offer in ('380429524',  '380670493',  '380780963',  '380429525',  '380429549',  '380670077',  '380811509',
+'380429534',  '380670046',  '380780972',  '380429538',  '380820259',  '380585930',  '380811495',
+'380820169',  '380670044',  '380298114',  '380820211',  '380670036',  '380518566',  '380670075',
+'380455515',  '380804435',  '380585882',  '380455550',  '380670016',  '380585900',  '380780980',
+'380455549',  '380804439',  '380735046',  '380455551',  '380670030',  '380487282',  '380429723',
+'380670463',  '380804395',  '380493751',  '380820217',  '380670024',  '380585906',  '380734790',
+'380670013',  '380804436',  '380585898',  '380429518',  '380670038',  '380585914',  '380811503',
+'380670012',  '380804445',  '380585848',  '380429539',  '380670018',  '380716333',  '380811497',
+'380670071',  '380780949',  '380518118',  '380820223',  '380670032',  '380487314',  '380811505',
+'380670048',  '380429716',  '380130180',  '380429522',  '380670459',  '380585951',  '380811510',
+'380670040',  '380429718',  '380585850',  '380429540',  '380670026',  '380511696',  '380670061',
+'380670020',  '380780947',  '380585858',  '380820229',  '380670034',  '380585959',  '380670054',
+'380670460',  '380780955',  '380585866',  '380429526',  '380670028',  '380734821',  '380780978',
+'380670065',  '380780965',  '380517974',  '380429544',  '380670022',  '380734824',  '380780953',
+'380670057',  '380780974',  '380585874',  '380820232',  '380670042',  '380734827',  '380429535',
+'380670073',  '380780982',  '380585922',  '380429527',  '380734795',  '380734839',  '380820187',
+'380670050',  '380780957',  '380804642',  '380429545',  '414305804',  '380734844',  '380820253',
+'380670067',  '380780968',  '380429721',  '380820241',  '380734799',  '380734848',  '380429523',
+'380670489',  '380780976',  '380820175',  '380455552',  '380734802',  '380734857',  '380820205',
+'380670059',  '380780951',  '380455554',  '380455553',  '380734807',  '380734860',  '380429719',
+'380670052',  '380780959',  '380455555',  '380820247',  '380734810',  '380811499',  '380811501',
+'380670491',  '380780970',  '380820181',  '380429516',  '380734818',  '380811507',  '380811493',
+'380670069',  '380780961',  '380429517',  '380429548',  '380429720',  '380811491',  '414238729')
+and ano = '&ANO'
+and mes = '&MES'
+and ciclo = '&CICLO'
+and (batch = '2' or
+batch = '3'));
+
+create table R24_P2 as(
+select ban,src_customer, subScriber_no,CHARGE_CODE, actv_amt_incl_tax FROM  pvadat_o.pva_t_bil_CHARGE@PVA_3
+where (ban,subScriber_no,src_customer) in (
+select ban,subScriber_no,src_customer from  R24_P1
+)
+AND CHARGE_CODE LIKE 'MP%'
+AND cust_sub_type in ('M','S')
+and ano = '&ANO'
+and mes = '&MES'
+and ciclo = '&CICLO'
+and (batch = '2' or
+batch = '3'));
+
+create table r24_p3 as ( select src_customer from r24_p2 GROUP BY src_customer);
+
+
+COL AA NOPRINT NEW_VALUE AA
+
+select nvl(rtrim(xmlagg(xmlelement(e,src_customer,',').extract('//text()')),','),'0') AA from r24_p3;
+
+create table r24_p4 as
+SELECT a.CUSTOMER_ID, b.ban, a.agreement_no, b.prim_resource_val, a.effective_date, a.ACTUAL_AMT, a.status, a.ent_seq_no, a.commit_start_date as data_inicial, a.commit_eff_end_date as data_multa, a.commit_end_date as data_final
+FROM MTAAPPO.CM7_FEES@TAOL_BCV a
+inner join MTAOBJP.SERVICE_AGREEMENT_ACTIVE@TAOL_BCV b
+on a.AGREEMENT_NO = b.AGREEMENT_NO
+inner join mtaappo.bill@TAOL_BCV c
+on c.ban = b.ban
+WHERE 1=1
+and CYCLE_RUN_MONTH IN (&MES)   
+and CYCLE_RUN_YEAR in (&ANO)
+and bl_cust_sub_type in ('M','S')
+and b.soc in ('380429524',  '380670493',  '380780963',  '380429525',  '380429549',  '380670077',  '380811509',
+'380429534',  '380670046',  '380780972',  '380429538',  '380820259',  '380585930',  '380811495',
+'380820169',  '380670044',  '380298114',  '380820211',  '380670036',  '380518566',  '380670075',
+'380455515',  '380804435',  '380585882',  '380455550',  '380670016',  '380585900',  '380780980',
+'380455549',  '380804439',  '380735046',  '380455551',  '380670030',  '380487282',  '380429723',
+'380670463',  '380804395',  '380493751',  '380820217',  '380670024',  '380585906',  '380734790',
+'380670013',  '380804436',  '380585898',  '380429518',  '380670038',  '380585914',  '380811503',
+'380670012',  '380804445',  '380585848',  '380429539',  '380670018',  '380716333',  '380811497',
+'380670071',  '380780949',  '380518118',  '380820223',  '380670032',  '380487314',  '380811505',
+'380670048',  '380429716',  '380130180',  '380429522',  '380670459',  '380585951',  '380811510',
+'380670040',  '380429718',  '380585850',  '380429540',  '380670026',  '380511696',  '380670061',
+'380670020',  '380780947',  '380585858',  '380820229',  '380670034',  '380585959',  '380670054',
+'380670460',  '380780955',  '380585866',  '380429526',  '380670028',  '380734821',  '380780978',
+'380670065',  '380780965',  '380517974',  '380429544',  '380670022',  '380734824',  '380780953',
+'380670057',  '380780974',  '380585874',  '380820232',  '380670042',  '380734827',  '380429535',
+'380670073',  '380780982',  '380585922',  '380429527',  '380734795',  '380734839',  '380820187',
+'380670050',  '380780957',  '380804642',  '380429545',  '414305804',  '380734844',  '380820253',
+'380670067',  '380780968',  '380429721',  '380820241',  '380734799',  '380734848',  '380429523',
+'380670489',  '380780976',  '380820175',  '380455552',  '380734802',  '380734857',  '380820205',
+'380670059',  '380780951',  '380455554',  '380455553',  '380734807',  '380734860',  '380429719',
+'380670052',  '380780959',  '380455555',  '380820247',  '380734810',  '380811499',  '380811501',
+'380670491',  '380780970',  '380820181',  '380429516',  '380734818',  '380811507',  '380811493',
+'380670069',  '380780961',  '380429517',  '380429548',  '380429720',  '380811491',  '414238729')
+and a.status = 'B'
+and a.customer_id in (&AA)
+group by b.ban, b.prim_resource_val, a.effective_date, a.ACTUAL_AMT, a.status, a.CUSTOMER_ID, a.ent_seq_no, a.agreement_no, a.commit_start_date, a.commit_eff_end_date, a.commit_end_date
+order by a.agreement_no
+;
+
+
+
+ create table r24_p4_1 as(select * from r24_p4 where rownum <= 1001);	
+
+ create table r24_p4_2 as(select max(agreement_no) as agree from r24_p4_1);
+
+-- if para número de linhas
+
+Declare
+  --Declarar as variaveis para que seja feito o processo abaixo.      
+  vcont     number;
+
+    
+Begin 
+
+   select cast((count(*)/1000) as integer) into vcont  from r24_p4; 
+
+   if vcont >=1 then delete from r24_p4_1 where agreement_no = (select max(agreement_no) as agree from r24_p4_1);
+
+   end if;
+
+commit;
+End;
+
+/
+
+  create table r24_p4_3 as(select agreement_no||', ' as agree from r24_p4_1 group by agreement_no );
+
+  create table r24_p4_4 as
+  SELECT  AGREEMENT_NO, '2'||';'||ENT_SEQ_no||';'||CUSTOMER_ID||';'||'93610559' as PLANO, effective_date, ACTUAL_AMT,status,CUSTOMER_ID, 
+  OPERATOR_ID
+  FROM MTAAPPO.CM7_FEES@taol1
+  WHERE 
+  agreement_no in (select * from r24_p4_3)
+  AND STATUS <> 'E'
+  --and actual_amt > 100
+  --and charge_cd = 'MPJIICAPSM'
+  --and effective_date >= TO_DATE('01/03/2018','DD/MM/YYYY')
+  ;
+
+
+
+-- For next para os dados
+
+Declare
+  --Declarar as variaveis para que seja feito o processo abaixo.      
+  vcont     number;
+
+    
+Begin 
+
+    select cast((count(*)/1000) as integer) into vcont  from r24_p4; 
+
+  
+  FOR Lcntr IN 2..vcont
+  Loop
+
+  delete from r24_p4_1;
+
+  insert into r24_p4_1(select * from r24_p4 where rownum <= 1001 and agreement_no >= (select agree from r24_p4_2));
+
+  delete from r24_p4_2;
+
+  insert into r24_p4_2(select max(agreement_no) as agree from r24_p4_1);
+
+  if Lcntr <> vcont then delete from r24_p4_1 where agreement_no = (select max(agreement_no) as agree from r24_p4_1);
+
+  end if;
+
+  delete from r24_p4_3;
+
+  insert into r24_p4_3(select agreement_no||', ' as agree from r24_p4_1 group by agreement_no );
+
+  insert into r24_p4_4
+  SELECT  AGREEMENT_NO, '2'||';'||ENT_SEQ_no||';'||CUSTOMER_ID||';'||'93610559' as PLANO, effective_date, ACTUAL_AMT,status,CUSTOMER_ID, 
+  OPERATOR_ID
+  FROM MTAAPPO.CM7_FEES@taol1
+  WHERE 
+  agreement_no in (select * from r24_p4_3)
+  AND STATUS <> 'E'
+  --and actual_amt > 100
+  --and charge_cd = 'MPJIICAPSM'
+  --and effective_date >= TO_DATE('01/03/2018','DD/MM/YYYY')
+  ;
+       
+  End Loop;
+
+commit;
+End;
+
+/
+
+CREATE TABLE r24_p5 AS
+(SELECT MAX(B.DAT_INICIO_COBRANCA) DAT_INICIO_COBRANCA,
+       NUM_NTC
+  FROM BI_FP_RECEITA_FATURA_DET@DW            B,
+       BI_DIM_CHARGE_CODE@DW                  C,
+       BI_DIM_OFERTA_POS@DW                   O,
+       BI_DIM_OFERTA_POS@DW                   D,
+       BI_DIM_TIPO_RECEITA@DW                 TR,
+       BI_DIM_RAZAO_ATIVIDADE@DW              R
+WHERE B.DW_CHARGE_CODE = C.DW_CHARGE_CODE(+)
+   AND B.DW_OFERTA = O.DW_OFERTA(+)
+   AND B.DW_OFERTA_DESCONTO = D.DW_OFERTA(+)
+   AND C.COD_TIPO_RECEITA = TR.COD_TIPO_RECEITA(+)
+   AND B.DW_RAZAO_ATIVIDADE = R.DW_RAZAO_ATIVIDADE(+)
+   AND VAL_TARIFADO > 0
+   AND (UPPER(O.DSC_NOME_OFERTA) LIKE '%TELEM%' OR
+         UPPER(O.DSC_NOME_OFERTA) LIKE '%M2M%' )     
+      ---AND num_conta_cli = '992172451'      
+   AND B.DAT_FATURA >= '0101&ANO'
+GROUP BY NUM_NTC
+);
+
+
+
+create table r24_p6 as (select * from r24_p5 where NUM_NTC IN (select PRIM_RESOURCE_VAL from r24_p4));
+
+
+create table r24_p7 as
+SELECT B.DAT_FATURA,
+       B.NUM_NTC,
+       MAX(O.DSC_NOME_OFERTA) PLANO,
+       SUM(DECODE(R.COD_RAZAO_ATIVIDADE, 'R     ', B.Val_Tarifa_Franquia_Mensal, 0)) val_franquia,
+       DAT_INICIO_COBRANCA
+  FROM BI_FP_RECEITA_FATURA_DET@DW            B,
+       BI_DIM_CHARGE_CODE@DW                  C,
+       BI_DIM_OFERTA_POS@DW                   O,
+       BI_DIM_OFERTA_POS@DW                   D,
+       BI_DIM_TIPO_RECEITA@DW                 TR,
+       BI_DIM_RAZAO_ATIVIDADE@DW              R
+WHERE B.DW_CHARGE_CODE = C.DW_CHARGE_CODE(+)
+   AND B.DW_OFERTA = O.DW_OFERTA(+)
+   AND B.DW_OFERTA_DESCONTO = D.DW_OFERTA(+)
+   AND C.COD_TIPO_RECEITA = TR.COD_TIPO_RECEITA(+)
+   AND B.DW_RAZAO_ATIVIDADE = R.DW_RAZAO_ATIVIDADE(+)
+   AND VAL_TARIFADO > 0
+   AND (UPPER(O.DSC_NOME_OFERTA) LIKE '%TELEM%' OR
+         UPPER(O.DSC_NOME_OFERTA) LIKE '%M2M%' )      
+      ---AND num_conta_cli = '992172451'      
+   AND B.DAT_FATURA >= '0101&ANO'
+GROUP BY B.DAT_FATURA,
+       B.NUM_NTC,
+       B.DAT_INICIO_COBRANCA;
+
+
+create table r24_p8 as (select * from r24_p7 where NUM_NTC IN (select PRIM_RESOURCE_VAL from r24_p4));
+
+
+create table r24_p9 as
+WITH W_BASE 
+AS
+(SELECT * from r24_p6)
+SELECT B.DAT_FATURA, B.NUM_NTC, B.PLANO, B.val_franquia
+  FROM r24_p8            B,       
+       W_BASE            W
+WHERE W.NUM_NTC = B.NUM_NTC
+  AND W.DAT_INICIO_COBRANCA = B.DAT_INICIO_COBRANCA;
+
+
+create table r24_p10 as
+select b.plano || ';' || replace(round((c.val_franquia/60)*(DATA_FINAL - DATA_MULTA),2),',','.') as isencao_multa,
+a.ban, '&CICLO' as ciclo
+from r24_p4 a inner join r24_p4_4 b on a.AGREEMENT_NO = b.agreement_no
+inner join r24_p9 c on a.PRIM_RESOURCE_VAL = c.num_ntc;
+
+create table r24_p11 as
+select '&CICLO' || ';' || '&MES'  || ';' || '&ANO'  || ';' || 'B;' as tipo, BAN, ';Apont 1 - Recalculo Telemetria' AS UM ,
+'&CICLO' || ';' || '&MES'  || ';' || '&ANO'  || ';' || 'B'  || ';' || BAN  ||  ';Apont 1 - Recalculo Telemetria' AS DOIS from r24_p4;
+
+
+
+
+SET ECHO OFF
+SET PAGESIZE 0
+SET LINESIZE 32767
+SET feed OFF
+SET head off
+SET VERIFY OFF
+SET TERMOUT OFF
+SET TRIMSPOOL ON
+SET numw 30
+SET WRAP OFF
+
+SPOOL .\SAIDA\Isencao_Multa_Telemetria_&CICLO._&MES._&ANO..txt
+
+select 'ISENCAO_MULTA'
+  from dual; 
+
+select isencao_multa
+  from r24_p10;
+
+SPOOL OFF
+
+
+SET ECHO OFF
+SET PAGESIZE 0
+SET LINESIZE 32767
+SET feed OFF
+SET head off
+SET VERIFY OFF
+SET TERMOUT OFF
+SET TRIMSPOOL ON
+SET numw 30
+SET WRAP OFF
+
+SPOOL .\SAIDA\Undo_&CICLO._&MES._&ANO..txt
+
+
+select 'TIPOBAN;Apont 7-XXXXXXXX'
+  from dual; 
+
+
+select TIPO || BAN ||';22;0;0;0;null'
+  from r24_p11 group by ban,tipo, um, dois;
+
+
+
+SPOOL OFF
+
+/
+
+drop table r24_p1;
+
+purge table r24_p1;
+
+drop table r24_p10;
+
+purge table r24_p10;
+
+drop table r24_p11;
+
+purge table r24_p11;
+
+drop table r24_p2;
+
+purge table r24_p2;
+
+drop table r24_p3;
+
+purge table r24_p3;
+
+drop table r24_p4;
+
+purge table r24_p4;
+
+drop table r24_p4_1;
+
+purge table r24_p4_1;
+
+drop table r24_p4_2;
+
+purge table r24_p4_2;
+
+drop table r24_p4_3;
+
+purge table r24_p4_3;
+
+drop table r24_p4_4;
+
+purge table r24_p4_4;
+
+drop table r24_p5;
+
+purge table r24_p5;
+
+drop table r24_p6;
+
+purge table r24_p6;
+
+drop table r24_p7;
+
+purge table r24_p7;
+
+drop table r24_p8;
+
+purge table r24_p8;
+
+drop table r24_p9;
+
+purge table r24_p9;
+
+exit;
+        
+
+
+

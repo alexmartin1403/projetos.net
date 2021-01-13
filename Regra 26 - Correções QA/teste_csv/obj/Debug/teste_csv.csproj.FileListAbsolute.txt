@@ -1,0 +1,52 @@
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre-faturamento-melissa\teste_csv\teste_csv\teste_csv\obj\Debug\teste_csv.csprojAssemblyReference.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre-faturamento-melissa\teste_csv\teste_csv\teste_csv\obj\Debug\teste_csv.csproj.CoreCompileInputs.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre-faturamento-melissa\teste_csv\teste_csv\teste_csv\bin\Debug\Não Faturado.exe.config
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre-faturamento-melissa\teste_csv\teste_csv\teste_csv\bin\Debug\Não Faturado.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre-faturamento-melissa\teste_csv\teste_csv\teste_csv\bin\Debug\Não Faturado.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre-faturamento-melissa\teste_csv\teste_csv\teste_csv\obj\Debug\Não Faturado.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre-faturamento-melissa\teste_csv\teste_csv\teste_csv\obj\Debug\Não Faturado.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\regra 23\reg23\reg23\teste_csv\obj\Debug\teste_csv.csproj.CoreCompileInputs.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\regra 23\reg23\reg23\teste_csv\bin\Debug\Revisao de Multas 5k.exe.config
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\regra 23\reg23\reg23\teste_csv\bin\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\regra 23\reg23\reg23\teste_csv\bin\Debug\Revisao de Multas 5k.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\regra 23\reg23\reg23\teste_csv\obj\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\regra 23\reg23\reg23\teste_csv\obj\Debug\Revisao de Multas 5k.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\regra 23\reg23\reg23\teste_csv\obj\Debug\teste_csv.csprojAssemblyReference.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\regra 23\reg23\reg23\teste_csv\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\regra 23\reg23\reg23\teste_csv\obj\Debug\teste_csv.csproj.CopyComplete
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg23\teste_csv\bin\Debug\Revisao de Multas 5k.exe.config
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg23\teste_csv\bin\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg23\teste_csv\bin\Debug\Revisao de Multas 5k.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg23\teste_csv\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg23\teste_csv\obj\Debug\teste_csv.csprojAssemblyReference.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg23\teste_csv\obj\Debug\teste_csv.csproj.CoreCompileInputs.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg23\teste_csv\obj\Debug\teste_csv.csproj.CopyComplete
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg23\teste_csv\obj\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg23\teste_csv\obj\Debug\Revisao de Multas 5k.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg25 e outros\teste_csv\bin\Debug\Revisao de Multas 5k.exe.config
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg25 e outros\teste_csv\bin\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg25 e outros\teste_csv\bin\Debug\Revisao de Multas 5k.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg25 e outros\teste_csv\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg25 e outros\teste_csv\obj\Debug\teste_csv.csprojAssemblyReference.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg25 e outros\teste_csv\obj\Debug\teste_csv.csproj.CoreCompileInputs.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg25 e outros\teste_csv\obj\Debug\teste_csv.csproj.CopyComplete
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg25 e outros\teste_csv\obj\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\reg25 e outros\teste_csv\obj\Debug\Revisao de Multas 5k.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 25 - Correções QA\teste_csv\bin\Debug\Revisao de Multas 5k.exe.config
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 25 - Correções QA\teste_csv\bin\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 25 - Correções QA\teste_csv\bin\Debug\Revisao de Multas 5k.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 25 - Correções QA\teste_csv\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 25 - Correções QA\teste_csv\obj\Debug\teste_csv.csprojAssemblyReference.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 25 - Correções QA\teste_csv\obj\Debug\teste_csv.csproj.CoreCompileInputs.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 25 - Correções QA\teste_csv\obj\Debug\teste_csv.csproj.CopyComplete
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 25 - Correções QA\teste_csv\obj\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 25 - Correções QA\teste_csv\obj\Debug\Revisao de Multas 5k.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 26 - Correções QA\teste_csv\bin\Debug\Revisao de Multas 5k.exe.config
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 26 - Correções QA\teste_csv\bin\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 26 - Correções QA\teste_csv\bin\Debug\Revisao de Multas 5k.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 26 - Correções QA\teste_csv\bin\Debug\Oracle.ManagedDataAccess.dll
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 26 - Correções QA\teste_csv\obj\Debug\teste_csv.csprojAssemblyReference.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 26 - Correções QA\teste_csv\obj\Debug\teste_csv.csproj.CoreCompileInputs.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 26 - Correções QA\teste_csv\obj\Debug\teste_csv.csproj.CopyComplete
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 26 - Correções QA\teste_csv\obj\Debug\Revisao de Multas 5k.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\movel\Recálculo multa Telemetria\Regra 26 - Correções QA\teste_csv\obj\Debug\Revisao de Multas 5k.pdb

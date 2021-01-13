@@ -1,0 +1,41 @@
+--a drop table if exists tb_r23_lev_multa_ANOAN_MESAN_CICLO;
+
+--a create table tb_r23_lev_multa_ANOAN_MESAN_CICLO (BAN varchar(500), ANALISE varchar(500), CNPJ varchar(500), RAZAO_SOCIAL varchar(500), GEO_ZONE varchar(500), MOTIVO varchar(500), RETORNO_LIMITE varchar(500), Total_E_DEVIDA varchar(500));
+
+--a \copy tb_r23_lev_multa_ANOAN_MESAN_CICLO from .\SAIDA\Levantamento_de_Multa_5K_ANOAN_MESAN_CICLO.csv with  delimiter ';' csv header;
+
+--a drop table if exists tb_r23_Isencao_de_multa_ANOAN_MESAN_CICLO;
+
+--a create table tb_r23_Isencao_de_multa_ANOAN_MESAN_CICLO (um varchar(500), ENT_SEQ_NO varchar(500), CUSTOMER_ID varchar(500), numero varchar(500), effective_date varchar(500), ACTUAL_AMT varchar(500), status varchar(500));
+
+--a \copy tb_r23_Isencao_de_multa_ANOAN_MESAN_CICLO from .\SAIDA\Isencao_de_multa_ANOAN_MESAN_CICLO.csv with  delimiter ';' csv header;
+
+--b drop table if exists tb_r24_Undo_CICLO_MESAT_ANOAT;
+
+--b create table tb_r24_Undo_CICLO_MESAT_ANOAT (TIPO varchar(500), BAN varchar(500), ";Apont 01 -XXXXXXXX" varchar(500), "BAN;Apont 01 -XXXXXXXX" varchar(500));
+
+--b \copy tb_r24_Undo_CICLO_MESAT_ANOAT from .\SAIDA\Undo_CICLO_MESAT_ANOAT.txt with  delimiter ';' csv header;
+
+--b drop table if exists tb_r24_Isencao_Multa_Telemetria_CICLO_MESAT_ANOAT;
+
+--b create table tb_r24_Isencao_Multa_Telemetria_CICLO_MESAT_ANOAT (ISENCAO_MULTA varchar(500), CICL varchar(500), BAN varchar(500));
+
+--b \copy tb_r24_Isencao_Multa_Telemetria_CICLO_MESAT_ANOAT from .\SAIDA\Isencao_Multa_Telemetria_CICLO_MESAT_ANOAT.txt with  delimiter ';' csv header;
+
+--c drop table if exists tb_r25_UNDO_APPAR_ANOAT_MESAT_CICLO;
+
+--c create table tb_r25_UNDO_APPAR_ANOAT_MESAT_CICLO (ARQUIVO varchar(500));
+
+--c \copy tb_r25_UNDO_APPAR_ANOAT_MESAT_CICLO from .\SAIDA\UNDO_APPAR_ANOAT_MESAT_CICLO.csv with  delimiter ';' csv header;
+
+--c drop table if exists tb_r25_CREDITO_APPAR_CICLO_MESAT_ANOAT;
+
+--c create table tb_r25_CREDITO_APPAR_CICLO_MESAT_ANOAT (APONTAMENTO varchar(500));
+
+--c \copy tb_r25_CREDITO_APPAR_CICLO_MESAT_ANOAT from .\SAIDA\CREDITO_APPAR_ANOAT_MESAT_CICLO.csv with  delimiter ';' csv header;
+
+
+
+
+
+
