@@ -1,0 +1,1 @@
+\copy TB_BL_R002_P0_TB_BASES_TEMP from arquivo with  delimiter ';' csv header;

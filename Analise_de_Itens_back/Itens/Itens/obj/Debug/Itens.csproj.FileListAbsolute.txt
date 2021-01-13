@@ -1,0 +1,7 @@
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Analise_de_itens\sharp_2017\Itens\Itens\bin\Debug\Itens.exe.config
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Analise_de_itens\sharp_2017\Itens\Itens\bin\Debug\Itens.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Analise_de_itens\sharp_2017\Itens\Itens\bin\Debug\Itens.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Analise_de_itens\sharp_2017\Itens\Itens\obj\Debug\Itens.csprojAssemblyReference.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Analise_de_itens\sharp_2017\Itens\Itens\obj\Debug\Itens.csproj.CoreCompileInputs.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Analise_de_itens\sharp_2017\Itens\Itens\obj\Debug\Itens.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Analise_de_itens\sharp_2017\Itens\Itens\obj\Debug\Itens.pdb

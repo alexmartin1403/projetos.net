@@ -1,0 +1,7 @@
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Batimento_Sigma\batimento_sigma_c\batimento_sigma\batimento_sigma\bin\Debug\batimento_sigma.exe.config
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Batimento_Sigma\batimento_sigma_c\batimento_sigma\batimento_sigma\bin\Debug\batimento_sigma.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Batimento_Sigma\batimento_sigma_c\batimento_sigma\batimento_sigma\bin\Debug\batimento_sigma.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Batimento_Sigma\batimento_sigma_c\batimento_sigma\batimento_sigma\obj\Debug\batimento_sigma.csprojAssemblyReference.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Batimento_Sigma\batimento_sigma_c\batimento_sigma\batimento_sigma\obj\Debug\batimento_sigma.csproj.CoreCompileInputs.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Batimento_Sigma\batimento_sigma_c\batimento_sigma\batimento_sigma\obj\Debug\batimento_sigma.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\Batimento_Sigma\batimento_sigma_c\batimento_sigma\batimento_sigma\obj\Debug\batimento_sigma.pdb

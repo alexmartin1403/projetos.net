@@ -1,0 +1,7 @@
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre_geracao\pre_geracao_sharp\pre_geracao\pre_geracao\bin\Debug\pre_geracao.exe.config
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre_geracao\pre_geracao_sharp\pre_geracao\pre_geracao\bin\Debug\pre_geracao.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre_geracao\pre_geracao_sharp\pre_geracao\pre_geracao\bin\Debug\pre_geracao.pdb
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre_geracao\pre_geracao_sharp\pre_geracao\pre_geracao\obj\Debug\pre_geracao.csprojAssemblyReference.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre_geracao\pre_geracao_sharp\pre_geracao\pre_geracao\obj\Debug\pre_geracao.csproj.CoreCompileInputs.cache
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre_geracao\pre_geracao_sharp\pre_geracao\pre_geracao\obj\Debug\pre_geracao.exe
+C:\Users\a.afonso.martinho\OneDrive - Accenture\ale\smart_rule\pre_geracao\pre_geracao_sharp\pre_geracao\pre_geracao\obj\Debug\pre_geracao.pdb
